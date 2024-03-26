@@ -7,13 +7,12 @@ pipeline {
             
             steps {
                 sh 'python -m py_compile sources/add2vals.py sources/calc.py' 
-                stash(name: 'compiled-results', includes: 'sources/*.py*') 
             }
         }
-        stage('Test') {
+        stage('Test') {//1
             agent {
                 docker {
-                    image 'qnib/pytest'
+                    image 'qnib/pytest'//2
                 }
             }
             steps {
@@ -21,7 +20,7 @@ pipeline {
             }
             post {
                 always {
-                    junit 'test-reports/results.xml'
+                    junit 'test-reports/results.xml'//4
                 }
             }
         } 
